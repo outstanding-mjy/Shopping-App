@@ -1,0 +1,9 @@
+Django==1.11.7
+django-markdown-deux==1.0.5
+django-redis==4.9.0
+django-tinymce==2.7.0
+Pillow==5.1.0
+PyMySQL==0.8.1
+pytz==2018.4
+redis==2.10.6
+uWSGI==2.0.17
