@@ -1,0 +1,96 @@
+{% extends 'base/base_user.html' %}
+{% load static %}
+{% block extCSS %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'axf/oredr/css/order_list.css' %}">
+{% endblock %}
+{% block extJS %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'axf/oredr/js/order_list.js' %}"></script>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        {% ifequal status '0' %}
+            {% ifequal orderlist.exists 0 %}
+                <span>您还没有下单</span>
+
+            {% endifequal %}
+
+            <ul>
+                {% for order in orderlist %}
+
+                    <li>
+                        <div class="order_info">
+                            <a href="{% url 'axf:orderdetail' %}?order_id={{ order.id }}">
+                                <p class="order_num">订单编号:{{ order.id }}</p>
+                            </a>
+                            <ul>
+                                {% for ordergoods in order.ordergoods_set.all %}
+
+                                    <li>
+
+                                        <a href="#">
+                                            <img src="{{ ordergoods.o_goods.productimg }}">
+                                            <div class="shoppingInfo">
+                                                <h6>{{ ordergoods.o_goods.productlongname }}</h6>
+
+                                                <p class="unit">{{ ordergoods.o_goods.specifics }}</p>
+                                                <p class="price">
+                                                    <span>￥{{ ordergoods.o_goods.price }}</span>
+                                                </p>
+                                            </div>
+                                        </a>
+
+                                    </li>
+
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+                    </li>
+
+                {% endfor %}
+            </ul>
+        {% endifequal %}
+        {% ifequal status '1' %}
+            <ul>
+                {% for order in orderlist %}
+
+                    <li>
+                        <div class="order_info">
+                                <p class="order_num">订单编号:{{ order.id }}</p>
+                            <ul>
+                                {% for ordergoods in order.ordergoods_set.all %}
+
+                                    <li>
+
+                                        <a href="#">
+                                            <img src="{{ ordergoods.o_goods.productimg }}">
+                                            <div class="shoppingInfo">
+                                                <h6>{{ ordergoods.o_goods.productlongname }}</h6>
+
+                                                <p class="unit">{{ ordergoods.o_goods.specifics }}</p>
+                                                <p class="price">
+                                                    <span>￥{{ ordergoods.o_goods.price }}</span>
+                                                </p>
+                                            </div>
+                                        </a>
+
+                                    </li>
+
+                                {% endfor %}
+                                <span class="affirm_receipt">确认收货</span>
+
+                            </ul>
+                        </div>
+                    </li>
+
+                {% endfor %}
+            </ul>
+
+        {% endifequal %}
+
+
+    </div>
+
+{% endblock %}
